@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FMCG SLM Interface</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Phosphor Icons for premium UI icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- Tailwind CSS via browser for rapid prototyping -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  
+  <!-- User Provided CSS Theme -->
+  <style type="text/tailwindcss">
+    @import "tailwindcss";
+
+    @custom-variant dark (&:is(.dark *));
+
+    :root {
+      --background: oklch(0.9911 0 0);
+      --foreground: oklch(0.2046 0 0);
+      --card: oklch(0.9911 0 0);
+      --card-foreground: oklch(0.2046 0 0);
+      --popover: oklch(0.9911 0 0);
+      --popover-foreground: oklch(0.4386 0 0);
+      --primary: oklch(0.8348 0.1302 160.9080);
+      --primary-foreground: oklch(0.2626 0.0147 166.4589);
+      --secondary: oklch(0.9940 0 0);
+      --secondary-foreground: oklch(0.2046 0 0);
+      --muted: oklch(0.9461 0 0);
+      --muted-foreground: oklch(0.2435 0 0);
+      --accent: oklch(0.9461 0 0);
+      --accent-foreground: oklch(0.2435 0 0);
+      --destructive: oklch(0.5523 0.1927 32.7272);
+      --destructive-foreground: oklch(0.9934 0.0032 17.2118);
+      --border: oklch(0.9037 0 0);
+      --input: oklch(0.9731 0 0);
+      --ring: oklch(0.8348 0.1302 160.9080);
+      --chart-1: oklch(0.8348 0.1302 160.9080);
+      --chart-2: oklch(0.6231 0.1880 259.8145);
+      --chart-3: oklch(0.6056 0.2189 292.7172);
+      --chart-4: oklch(0.7686 0.1647 70.0804);
+      --chart-5: oklch(0.6959 0.1491 162.4796);
+      --sidebar: oklch(0.9911 0 0);
+      --sidebar-foreground: oklch(0.5452 0 0);
+      --sidebar-primary: oklch(0.8348 0.1302 160.9080);
+      --sidebar-primary-foreground: oklch(0.2626 0.0147 166.4589);
+      --sidebar-accent: oklch(0.9461 0 0);
+      --sidebar-accent-foreground: oklch(0.2435 0 0);
+      --sidebar-border: oklch(0.9037 0 0);
+      --sidebar-ring: oklch(0.8348 0.1302 160.9080);
+      --font-sans: Outfit, sans-serif;
+      --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+      --font-mono: monospace;
+      --radius: 0.5rem;
+      --shadow-x: 0px;
+      --shadow-y: 1px;
+      --shadow-blur: 3px;
+      --shadow-spread: 0px;
+      --shadow-opacity: 0.17;
+      --shadow-color: #000000;
+      --shadow-2xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
+      --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
+      --shadow-sm: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
+      --shadow: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
+      --shadow-md: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 2px 4px -1px hsl(0 0% 0% / 0.17);
+      --shadow-lg: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 4px 6px -1px hsl(0 0% 0% / 0.17);
+      --shadow-xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 8px 10px -1px hsl(0 0% 0% / 0.17);
+      --shadow-2xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.43);
+      --tracking-normal: 0.025em;
+      --spacing: 0.25rem;
+    }
+
+    .dark {
+      --background: oklch(0.1822 0 0);
+      --foreground: oklch(0.9288 0.0126 255.5078);
+      --card: oklch(0.2046 0 0);
+      --card-foreground: oklch(0.9288 0.0126 255.5078);
+      --popover: oklch(0.2603 0 0);
+      --popover-foreground: oklch(0.7348 0 0);
+      --primary: oklch(0.4365 0.1044 156.7556);
+      --primary-foreground: oklch(0.9213 0.0135 167.1556);
+      --secondary: oklch(0.2603 0 0);
+      --secondary-foreground: oklch(0.9851 0 0);
+      --muted: oklch(0.2393 0 0);
+      --muted-foreground: oklch(0.7122 0 0);
+      --accent: oklch(0.3132 0 0);
+      --accent-foreground: oklch(0.9851 0 0);
+      --destructive: oklch(0.3123 0.0852 29.7877);
+      --destructive-foreground: oklch(0.9368 0.0045 34.3092);
+      --border: oklch(0.2809 0 0);
+      --input: oklch(0.2603 0 0);
+      --ring: oklch(0.8003 0.1821 151.7110);
+      --chart-1: oklch(0.8003 0.1821 151.7110);
+      --chart-2: oklch(0.7137 0.1434 254.6240);
+      --chart-3: oklch(0.7090 0.1592 293.5412);
+      --chart-4: oklch(0.8369 0.1644 84.4286);
+      --chart-5: oklch(0.7845 0.1325 181.9120);
+      --sidebar: oklch(0.1822 0 0);
+      --sidebar-foreground: oklch(0.6301 0 0);
+      --sidebar-primary: oklch(0.4365 0.1044 156.7556);
+      --sidebar-primary-foreground: oklch(0.9213 0.0135 167.1556);
+      --sidebar-accent: oklch(0.3132 0 0);
+      --sidebar-accent-foreground: oklch(0.9851 0 0);
+      --sidebar-border: oklch(0.2809 0 0);
+      --sidebar-ring: oklch(0.8003 0.1821 151.7110);
+    }
+
+    @theme inline {
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
+      --color-card: var(--card);
+      --color-card-foreground: var(--card-foreground);
+      --color-popover: var(--popover);
+      --color-popover-foreground: var(--popover-foreground);
+      --color-primary: var(--primary);
+      --color-primary-foreground: var(--primary-foreground);
+      --color-secondary: var(--secondary);
+      --color-secondary-foreground: var(--secondary-foreground);
+      --color-muted: var(--muted);
+      --color-muted-foreground: var(--muted-foreground);
+      --color-accent: var(--accent);
+      --color-accent-foreground: var(--accent-foreground);
+      --color-destructive: var(--destructive);
+      --color-destructive-foreground: var(--destructive-foreground);
+      --color-border: var(--border);
+      --color-input: var(--input);
+      --color-ring: var(--ring);
+      --color-chart-1: var(--chart-1);
+      --color-chart-2: var(--chart-2);
+      --color-chart-3: var(--chart-3);
+      --color-chart-4: var(--chart-4);
+      --color-chart-5: var(--chart-5);
+      --color-sidebar: var(--sidebar);
+      --color-sidebar-foreground: var(--sidebar-foreground);
+      --color-sidebar-primary: var(--sidebar-primary);
+      --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+      --color-sidebar-accent: var(--sidebar-accent);
+      --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+      --color-sidebar-border: var(--sidebar-border);
+      --color-sidebar-ring: var(--sidebar-ring);
+
+      --font-sans: var(--font-sans);
+      --font-mono: var(--font-mono);
+      --font-serif: var(--font-serif);
+
+      --radius-sm: calc(var(--radius) - 4px);
+      --radius-md: calc(var(--radius) - 2px);
+      --radius-lg: var(--radius);
+      --radius-xl: calc(var(--radius) + 4px);
+
+      --shadow-2xs: var(--shadow-2xs);
+      --shadow-xs: var(--shadow-xs);
+      --shadow-sm: var(--shadow-sm);
+      --shadow: var(--shadow);
+      --shadow-md: var(--shadow-md);
+      --shadow-lg: var(--shadow-lg);
+      --shadow-xl: var(--shadow-xl);
+      --shadow-2xl: var(--shadow-2xl);
+
+      --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
+      --tracking-tight: calc(var(--tracking-normal) - 0.025em);
+      --tracking-normal: var(--tracking-normal);
+      --tracking-wide: calc(var(--tracking-normal) + 0.025em);
+      --tracking-wider: calc(var(--tracking-normal) + 0.05em);
+      --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+    }
+
+    @layer base {
+      * {
+        @apply border-border outline-ring/50;
+      }
+      body {
+        @apply bg-background text-foreground;
+        letter-spacing: var(--tracking-normal);
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-background text-foreground h-screen flex flex-col font-sans transition-colors duration-300 antialiased selection:bg-primary/20">
+
+  <!-- Header -->
+  <header class="bg-card border-b border-border py-4 px-6 flex items-center justify-between shadow-xs z-10 sticky top-0">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-sm">
+        <i class="ph-fill ph-brain text-2xl"></i>
+      </div>
+      <div>
+        <h1 class="font-bold text-lg leading-tight tracking-tight">FMCG Intelligence</h1>
+        <p class="text-xs text-muted-foreground font-medium">Small Language Model Engine</p>
+      </div>
+    </div>
+    
+    <div class="flex items-center gap-2">
+      <button id="theme-toggle" class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-secondary text-secondary-foreground transition-colors cursor-pointer" aria-label="Toggle Theme">
+        <i class="ph ph-moon text-xl block" id="theme-icon-moon"></i>
+        <i class="ph ph-sun text-xl hidden" id="theme-icon-sun"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Chat Area -->
+  <main id="chat-container" class="flex-1 overflow-y-auto p-4 sm:p-6 lg:px-8 flex flex-col gap-6 scroll-smooth bg-muted/20">
+    <div class="max-w-4xl mx-auto w-full flex flex-col gap-6 pb-4">
+      
+      <!-- Welcome Date -->
+      <div class="flex w-full justify-center mt-2 mb-4">
+        <div class="bg-card text-muted-foreground text-xs font-medium py-1.5 px-4 rounded-full border border-border shadow-2xs">
+          Today
+        </div>
+      </div>
+
+      <!-- Incoming Message -->
+      <div class="flex items-start gap-4 w-full">
+        <div class="w-9 h-9 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-primary-foreground shadow-sm mt-1 border border-border/10">
+          <i class="ph-fill ph-robot text-lg"></i>
+        </div>
+        <div class="bg-card border border-border rounded-2xl rounded-tl-sm p-4 sm:p-5 shadow-sm text-card-foreground text-sm sm:text-base max-w-[85%] sm:max-w-[75%]">
+          <p class="leading-relaxed">Hello! I am the FMCG Intelligence Assistant. I am trained on your extensive dataset of Fast-Moving Consumer Goods insights.</p>
+          <p class="leading-relaxed mt-3">I can help you analyze trends, summarize retail performance, or draft marketing strategies based on the `fmcg_corpus.txt`. How can I assist you today?</p>
+        </div>
+      </div>
+
+      <!-- Typing indicator (hidden by default) -->
+      <div id="typing-indicator" class="flex items-start gap-4 w-full hidden">
+        <div class="w-9 h-9 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-primary-foreground shadow-sm mt-1">
+          <i class="ph-fill ph-robot text-lg"></i>
+        </div>
+        <div class="bg-card border border-border rounded-2xl rounded-tl-sm py-4 px-5 shadow-sm flex gap-1.5 items-center">
+          <div class="w-2 h-2 rounded-full bg-foreground/40 animate-bounce" style="animation-delay: 0ms"></div>
+          <div class="w-2 h-2 rounded-full bg-foreground/40 animate-bounce" style="animation-delay: 150ms"></div>
+          <div class="w-2 h-2 rounded-full bg-foreground/40 animate-bounce" style="animation-delay: 300ms"></div>
+        </div>
+      </div>
+      
+      <!-- Anchor for scrolling -->
+      <div id="scroll-anchor"></div>
+    </div>
+  </main>
+
+  <!-- Input Area -->
+  <footer class="p-4 bg-card border-t border-border z-10 shadow-[0_-4px_10px_rgba(0,0,0,0.02)]">
+    <div class="max-w-4xl mx-auto relative flex flex-col gap-2">
+      <form id="chat-form" class="flex items-end gap-2 bg-background border border-border rounded-xl p-2 shadow-sm focus-within:ring-2 focus-within:ring-ring focus-within:border-ring transition-all w-full">
+        
+        <button type="button" class="p-2.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors rounded-lg shrink-0" aria-label="Attach File">
+          <i class="ph ph-paperclip text-xl"></i>
+        </button>
+        
+        <textarea 
+          id="chat-input"
+          class="flex-1 max-h-32 min-h-[44px] bg-transparent text-foreground placeholder-muted-foreground resize-none focus:outline-none py-3 px-2 text-sm sm:text-base"
+          placeholder="Ask a question about FMCG data..."
+          rows="1"
+        ></textarea>
+        
+        <button type="submit" class="p-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-all shadow-sm flex items-center justify-center hover:scale-105 active:scale-95 shrink-0" title="Send message">
+          <i class="ph-fill ph-paper-plane-right text-lg"></i>
+        </button>
+      </form>
+      <div class="text-center text-[11px] text-muted-foreground">
+        Generated text may be inaccurate. Please verify important information.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme logic
+    const html = document.documentElement;
+    const themeBtn = document.getElementById('theme-toggle');
+    const moonIcon = document.getElementById('theme-icon-moon');
+    const sunIcon = document.getElementById('theme-icon-sun');
+
+    // System theme preference check
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      html.classList.add('dark');
+      moonIcon.classList.add('hidden');
+      sunIcon.classList.remove('hidden');
+    }
+
+    themeBtn.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      if (html.classList.contains('dark')) {
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
+      } else {
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+      }
+    });
+
+    // Auto-resize textarea
+    const chatInput = document.getElementById("chat-input");
+    chatInput.addEventListener("input", function() {
+      this.style.height = "auto";
+      this.style.height = (this.scrollHeight) + "px";
+    }, false);
+
+    // Chat functionality
+    const chatForm = document.getElementById('chat-form');
+    const chatContainer = document.getElementById('chat-container');
+    const scrollAnchor = document.getElementById('scroll-anchor');
+    const typingIndicator = document.getElementById('typing-indicator');
+
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      appendUserMessage(message);
+      chatInput.value = '';
+      chatInput.style.height = "auto"; // reset height
+      
+      scrollToBottom();
+      
+      typingIndicator.classList.remove('hidden');
+      scrollToBottom();
+
+      fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: message })
+      })
+      .then(res => res.json())
+      .then(data => {
+        typingIndicator.classList.add('hidden');
+        appendBotMessage(data.message);
+        scrollToBottom();
+      })
+      .catch(err => {
+        typingIndicator.classList.add('hidden');
+        appendBotMessage("Error connecting to the backend! Is server.py running?");
+        scrollToBottom();
+      });
+    });
+
+    chatInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            chatForm.dispatchEvent(new Event('submit'));
+        }
+    });
+
+    function appendUserMessage(text) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'flex items-start gap-4 w-full self-end flex-row-reverse opacity-0 transition-opacity duration-300';
+      msgDiv.innerHTML = `
+        <div class="w-9 h-9 rounded-full bg-secondary flex-shrink-0 flex items-center justify-center text-secondary-foreground shadow-sm mt-1 border border-border/50">
+          <i class="ph-fill ph-user text-lg"></i>
+        </div>
+        <div class="bg-primary border border-primary text-primary-foreground rounded-2xl rounded-tr-sm p-4 sm:p-5 shadow-sm text-sm sm:text-base max-w-[85%] sm:max-w-[75%] whitespace-pre-wrap"></div>
+      `;
+      msgDiv.querySelector('.bg-primary').textContent = text;
+      
+      scrollAnchor.parentNode.insertBefore(msgDiv, typingIndicator);
+      
+      // Fade-in animation
+      requestAnimationFrame(() => {
+        msgDiv.classList.remove('opacity-0');
+      });
+    }
+
+    function appendBotMessage(text) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'flex items-start gap-4 w-full opacity-0 transition-opacity duration-300';
+      msgDiv.innerHTML = `
+        <div class="w-9 h-9 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-primary-foreground shadow-sm mt-1 border border-border/10">
+          <i class="ph-fill ph-robot text-lg"></i>
+        </div>
+        <div class="bg-card border border-border rounded-2xl rounded-tl-sm p-4 sm:p-5 shadow-sm text-card-foreground text-sm sm:text-base max-w-[85%] sm:max-w-[75%] whitespace-pre-wrap"></div>
+      `;
+      msgDiv.querySelector('.bg-card').textContent = text;
+      
+      scrollAnchor.parentNode.insertBefore(msgDiv, typingIndicator);
+      
+      // Fade-in animation
+      requestAnimationFrame(() => {
+        msgDiv.classList.remove('opacity-0');
+      });
+    }
+
+    function scrollToBottom() {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  </script>
+</body>
+</html>

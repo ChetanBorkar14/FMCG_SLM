@@ -50,8 +50,6 @@ def get_batch(batch_size=batch_size):
     return x.to(device), y.to(device)
 
 
-
-
 class TinyGPT(nn.Module):
     def __init__(self):
         super().__init__()
